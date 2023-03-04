@@ -62,7 +62,7 @@ export default function Home() {
 
     try {
       const axiosResponse = await axios.post(
-        "https://king-prawn-app-2-7hadl.ondigitalocean.app/",
+        "https://sea-lion-app-f2pl3.ondigitalocean.app/",
         {
           inputText: embedInput
           })
