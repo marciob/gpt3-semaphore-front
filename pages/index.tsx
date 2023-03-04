@@ -3,6 +3,7 @@ import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import { MoonLoader } from "react-spinners";
+import axios from 'axios';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,8 @@ export default function Home() {
   //stores the answer results
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [embedInput, setEmbedInput] = useState('');
+  const [answerEmbed, setAnswerEmbed] = useState();
 
   useEffect(() => {
     if (input.length <= 300) {
@@ -50,6 +53,26 @@ export default function Home() {
     }
   };
 
+  async function submitEmbed() {
+    if (embedInput.length > 300) {
+      return setError(true);
+    }
+
+    setLoading(true);
+
+    try {
+      const axiosResponse = await axios.post(
+        "https://king-prawn-app-2-7hadl.ondigitalocean.app/",
+        {
+          inputText: embedInput
+          })
+      setAnswerEmbed(axiosResponse.data.message.response)
+    } catch (error) {
+      console.log(error)
+    }
+    setLoading(false)
+  }
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <Head>
@@ -64,6 +87,9 @@ export default function Home() {
         </h2>
         {/* <h3 className="text-center pb-2">Ask:</h3> */}
         {/* input field */}
+        <h2 className="text-1xl text-center pb-2">
+          Fine-tuning
+        </h2>
         <div className="flex flex-col gap-2 justify-center">
           <div className="relative w-full grid grid-cols-1 gap-1">
             <textarea
@@ -108,6 +134,58 @@ export default function Home() {
               <h4 className="text-lg font-semibold pb-2">Solution:</h4>
               <div className="relative w-full rounded-md bg-gray-100 p-4">
                 <p className="text-lg text-gray-700">{answer}</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <h2 className="text-1xl text-center pb-2 mt-8">
+          Embeddings
+        </h2>
+        <div className="flex flex-col gap-2 justify-center">
+          <div className="relative w-full grid grid-cols-1 gap-1">
+            <textarea
+              rows={3}
+              onChange={(e) => setEmbedInput(e.target.value)}
+              value={embedInput}
+              className="border-2 border-gray-300 bg-white p-4 rounded-lg text-sm focus:outline-none resize-none"
+              placeholder="Enter your question"
+            />
+            {/* error message handler */}
+            {error && (
+              <p className="text-xs text-red-500">
+                Character limit exceeded, please enter less text
+              </p>
+            )}
+            {/* charecter limit text in the bottom right side of textarea */}
+            <div
+              className={`absolute bottom-2 right-2 ${
+                input.length > 300 ? "text-red-500" : "text-gray-400"
+              } text-xs`}
+            >
+              <span>{input.length}</span>/300
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={submitEmbed}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+          >
+            {loading ? (
+              <div className="flex justify-center items-center gap-2">
+                <p>Loading...</p>
+                <MoonLoader size={20} />
+              </div>
+            ) : (
+              "Ask"
+            )}
+          </button>
+          {/* output field with the results (shown only when "answer" is true) */}
+          {answerEmbed && (
+            <div className="mt-8">
+              <h4 className="text-lg font-semibold pb-2">Solution:</h4>
+              <div className="relative w-full rounded-md bg-gray-100 p-4">
+                <p className="text-lg text-gray-700">{answerEmbed}</p>
               </div>
             </div>
           )}
