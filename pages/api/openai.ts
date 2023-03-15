@@ -17,22 +17,9 @@ export default async function handler(
   const { input } = req.body;
 
   // using model from data1.jsonl
-  const response = await openai.createCompletion({
-    model:
-      "davinci:ft-personal:first-model-test-100examples-2023-03-02-09-33-14",
-    prompt: `${initial_prompt} ${input} ${final_prompt}`,
-    max_tokens: 900,
-    temperature: 0,
-    // top_p: 1,
-    // n: 1,
-    // stream: false,
-    // logprobs: null,
-    stop: ["\nEND"],
-  });
-
-  // using model from data2.jsonl
   // const response = await openai.createCompletion({
-  //   model: "davinci:ft-personal:data2-2023-03-15-05-24-05",
+  //   model:
+  //     "davinci:ft-personal:first-model-test-100examples-2023-03-02-09-33-14",
   //   prompt: `${initial_prompt} ${input} ${final_prompt}`,
   //   max_tokens: 900,
   //   temperature: 0,
@@ -42,6 +29,19 @@ export default async function handler(
   //   // logprobs: null,
   //   stop: ["\nEND"],
   // });
+
+  // using model from data2.jsonl
+  const response = await openai.createCompletion({
+    model: "davinci:ft-personal:data2-2023-03-15-05-24-05",
+    prompt: `${initial_prompt} ${input} ${final_prompt}`,
+    max_tokens: 900,
+    temperature: 0,
+    // top_p: 1,
+    // n: 1,
+    // stream: false,
+    // logprobs: null,
+    stop: ["\nEND"],
+  });
 
   const answer = response.data?.choices?.[0].text;
 
