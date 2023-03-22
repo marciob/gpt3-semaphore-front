@@ -1,9 +1,10 @@
 ## Explaining files / tests
 
-| **File**    | **What is that**                                                                                                                                                                                       | **Observations** |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
-| data1.jsonl | Data related to Semaphore, it's a mix of some generated prompts with documentation's information plus some content from discord/telegram group. Chatgpt 3.5 was used to help to generat some of those. |                  |
-| data2.jsonl | It's similar as data1.json, but for each example it was generated 4 more, written in different way, using Chatgpt for that.                                                                            |                  |
+| **File**    | **What is that**                                                                                                                                                                            | **Observations** |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| data1.jsonl | Data related to Semaphore, it's a mix of some generated prompts with documentation's information plus some content manually created. Chatgpt 3.5 was used to help to generat some of those. |                  |
+| data2.jsonl | It's similar as data1.json, but for each example it was generated 4 more, written in different way, using Chatgpt for that.                                                                 |                  |
+| data3.jsonl | Bunch of prompt/completions extracted from messages received on Discord/Telegram, in a .jsonl format required for fine-tuning. that.                                                        |                  |
 
 <br>
 
